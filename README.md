@@ -26,9 +26,12 @@ A tool to optimize a given video file for LBRY recommended settings.
 Within a commandline or Powershell window:  
 ```py.exe .\optimize-video.py -input C:\Path\To\InputVideo.mp4```  
 optionally:  
-```py.exe .\optimize-video.py -input C:\Path\To\InputVideo.mp4 -output C:\Path\To\OutputVideo.mp4```  
+```py.exe .\optimize-video.py -input C:\Path\To\InputVideo.mp4 -output C:\Path\To\OutputVideo.mp4```
+optionally:
+```py.exe .\optimize-video.py -input C:\Path\To\InputVideo.mp4 -output C:\Path\To\OutputVideo.mp4 -quality 25```
 
 ### Parameters
 
 * -input or -i
 * -output or -o
+* -quality or -q
