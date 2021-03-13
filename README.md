@@ -32,11 +32,23 @@ A commandline tool to publish a file to LBRY, with support for automatically pop
 ## Usage
 
 Within a commandline or Powershell window:  
-```py.exe .\publish-file.py -input C:\Path\To\InputVideo.mp4```  
+```py.exe .\publish-file.py --path C:\Path\To\Files --channel @MyAwesomeChannel```
+
+This basic usage will direct our tool to visit the path specified. Within this path, the script expects to find several files:
+
+* **FileToPublish**: A file you wish to publish
+    * e.g. MyVideo.mp4, MyMusicFile.mp3, MyImage.png, MyBook.pdf 
+* **Thumbnail**: A small image file that will be used as your thumbnail image for a given publish
+    * e.g. MyThumbnail.webp 
+* **Description**: A text file with information you wish to have written to the "Description" box of a given published file.
+    * e.g. MyDescription.description 
+* **Tag**: A text file with a list of up to 5 tags. Each tag is a single word, no spacing, on a single line.
+    * e.g. MyTags.tags
+
 optionally:  
-```py.exe .\publish-file.py -input C:\Path\To\InputVideo.mp4 -output C:\Path\To\OutputVideo.mp4```  
+```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --extension .mp4```  
 optionally:  
-```py.exe .\publish-file.py -input C:\Path\To\InputVideo.mp4 -output C:\Path\To\OutputVideo.mp4 -quality 25```  
+```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --file SpecificFileInPath.mp4```  
 
 ### Parameters
 
