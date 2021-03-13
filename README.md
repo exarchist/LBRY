@@ -24,6 +24,8 @@ A commandline tool to publish a file to LBRY, with support for automatically pop
 * Description
 * Tags
 
+**Warning**: Be aware this script will publish files to LBRY and will therefore incur costs in LBC for each upload/publication. You are responsible for your own wallet.
+
 ## Dependencies
 
 * Python 3.X
@@ -51,7 +53,7 @@ This basic usage will direct our tool to visit the path specified. Within this p
 optionally:  
 ```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --extension .mp4```  
 optionally:  
-```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --file SpecificFileInPath.mp4```  
+```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --file SpecificFileInPath.mp4``` 
 
 ### Parameters
 
