@@ -39,10 +39,13 @@ This basic usage will direct our tool to visit the path specified. Within this p
 * **FileToPublish**: A file you wish to publish
     * e.g. MyVideo.mp4, MyMusicFile.mp3, MyImage.png, MyBook.pdf 
 * **Thumbnail**: A small image file that will be used as your thumbnail image for a given publish
-    * e.g. MyThumbnail.webp 
-* **Description**: A text file with information you wish to have written to the "Description" box of a given published file.
+    * e.g. MyThumbnail.webp, MyThumbnail.png, MyThumbnail.gif
+* **Description**: A text file with information you wish to have written to the "Description" data of a given published file
+    * The file extension for this file must be ".description"
     * e.g. MyDescription.description 
-* **Tag**: A text file with a list of up to 5 tags. Each tag is a single word, no spacing, on a single line.
+* **Tag**: A text file with a list of up to 5 tags
+    * Each tag is on a single line
+    * The file extension for this file must be ".tag" or ".tags"
     * e.g. MyTags.tags
 
 optionally:  
