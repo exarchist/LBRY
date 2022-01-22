@@ -49,10 +49,13 @@ GTagFile = ""
 # Tag Data
 GTags = []
 
+# Language of your content, using RFC 5646 format, eg: for English `en`, for Spanish (Spain) `es-ES`, for Spanish (Mexican) `es-MX` etc.
+GLanguageID = []
+
 GFileTypes = ["Upload", "Thumbnail", "Description", "Tag"]
 GUploadFileExtension = ["mp4", "mkv", "mov", "png", "jpg", "gif", "webp", "xml", "txt", "pdf"]
-GThumbnailFileExtension = ["webp", "gif", "jpg", "jpeg"]
-GDescriptionFileExtension = ["description"]
+GThumbnailFileExtension = ["webp", "gif", "jpg", "jpeg", "png"]
+GDescriptionFileExtension = ["txt", "description"]
 GTagFileExtension = ["tag", "tags"]
 
 #==========================================================================
@@ -64,6 +67,7 @@ def SetupArgumentParser():
     Parser.add_argument("-e", "--extension", help="File Extension for the File-to-Upload (e.g. mp4)")
     Parser.add_argument("-f","--file", help="FileName")
     Parser.add_argument("-c","--channel", required=True, help="Channel ID")
+    Parser.add_argument("-l","--language", required=False, help="Language of content in RFC 5646 format (e.g. en, de, es-ES,es-MX, etc.) Default: en")
 
     return Parser
 #
@@ -148,7 +152,7 @@ def InitializeUploadFileExtension(inExtension):
 # Get the File Name from Extension
 def DeduceFileNameFromExtension(inPath, inExtension):
 #
-    # Find all Files in our path matching given extetnsion
+    # Find all Files in our path matching given extension
     FoundFiles = glob.glob(inPath + "/*." + inExtension)
     
     if (FoundFiles is not None):
@@ -174,7 +178,7 @@ def DeduceFileNameFromExtension(inPath, inExtension):
 # Get the File Name from Extension
 def DeduceFileNameFromExtensionAbortable(inPath, inExtension):
 #
-    # Find all Files in our path matching given extetnsion
+    # Find all Files in our path matching given extension
     FoundFiles = glob.glob(f"{inPath}/*.{inExtension}")
     NumFiles = len(FoundFiles)
 
@@ -227,6 +231,14 @@ def InitializeChannelName(inChannelName):
 #
     global GChannelName
     GChannelName = inChannelName
+#
+
+#==========================================================================
+
+def InitializeLanguageID(inLanguageID):
+#
+    global GLanguageID
+    GLanguageID = inLanguageID
 #
 
 #==========================================================================
@@ -337,7 +349,7 @@ def InitializeDescription(inPath):
 
     if (GDescriptionFile is not None):
     #
-        ReadFile = open(GDescriptionFile, 'r').read()
+        ReadFile = open(GDescriptionFile, 'r', encoding='utf-8-sig').read()
         GDescription = str(ReadFile)
 
         if (GDescription is not None):
@@ -417,9 +429,12 @@ def InitializePublishURL():
     # Trim Path information from Filename
     FilenameNoPath = os.path.basename(GUploadFileName)
     # Trim Extension from Filename
-    FilenameNoExtension = FilenameNoPath.split(".")[0]
-    # Clean Underscores from Filename
-    GPublishURL = FilenameNoExtension.replace("_","-")
+    FilenameNoExtension = FilenameNoPath.rsplit(".", 1)[0]
+    # Clean special characters, underscores and spaces from Filename
+    specialChars = " []_"
+    for specialChar in specialChars:
+        FilenameNoExtension = FilenameNoExtension.replace(specialChar, "-")
+    GPublishURL = FilenameNoExtension
 
     print(f"Publishing to URL: {GPublishURL}")
 #
@@ -433,12 +448,12 @@ def InitializePublishTitle():
     # Trim Path information from Filename
     FilenameNoPath = os.path.basename(GUploadFileName)
     # Trim Extension from Filename
-    FilenameNoExtension = FilenameNoPath.split(".")[0]
+    FilenameNoExtension = FilenameNoPath.rsplit(".",1)[0]
     # Clean Underscores from Filename
-    FilenameCleaned = FilenameNoExtension.replace("_"," ")
+    # FilenameCleaned = FilenameNoExtension.replace("_"," ")
 
     # Built-in Python Title uppercasing
-    GPublishTitle = FilenameCleaned.title()
+    GPublishTitle = FilenameNoExtension
 
     print(f"Publishing with Title: {GPublishTitle}")
 #
@@ -468,7 +483,7 @@ def ConstructJSON():
             "channel_name": GChannelName,
             # Channel's Claim ID (e.g. b1ff6c2746a91860188b676b674083c6379d3a49)
             "channel_id": GChannelID,
-            "languages": [],
+            "languages": GLanguageID,
             "locations": [],
             "thumbnail_url": GThumbnailFileURL,
             "funding_account_ids": [],
@@ -516,6 +531,9 @@ InitializeUploadFileData(args.extension, args.file)
 
 # Initialize our Channel data
 InitializeChannelData(args.channel)
+
+# Initialize our language data
+InitializeLanguageID(args.language)
 
 # Initialize our Thumbnail
 InitializeThumbnail(GFilePath)

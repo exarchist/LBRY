@@ -29,7 +29,8 @@ A commandline tool to publish a file to LBRY, with support for automatically pop
 ## Dependencies
 
 * Python 3.X
-* FFMPEG (2021-01-09-git-2e2891383e-full_build-www.gyan.dev)
+* FFMPEG (2021-01-09-git-2e2891383e-full_build-www.gyan.dev) - [Download](https://www.gyan.dev/ffmpeg/builds)
+* A running LBRY desktop instance. Download at [LBRY web site](https://lbry.com/get?showall=1).
 
 ## Usage
 
@@ -39,12 +40,12 @@ Within a commandline or Powershell window:
 This basic usage will direct our tool to visit the path specified. Within this path, the script expects to find several files:
 
 * **FileToPublish**: A file you wish to publish
-    * e.g. MyVideo.mp4, MyMusicFile.mp3, MyImage.png, MyBook.pdf 
+    * e.g. MyVideo.mp4, MyMusicFile.mp3, MyImage.png, MyBook.pdf
 * **Thumbnail**: A small image file that will be used as your thumbnail image for a given publish
     * e.g. MyThumbnail.webp, MyThumbnail.png, MyThumbnail.gif
 * **Description**: A text file with information you wish to have written to the "Description" data of a given published file
-    * The file extension for this file must be ".description"
-    * e.g. MyDescription.description 
+    * The file extension for this file must be ".description" or ".txt"
+    * e.g. MyDescription.description
 * **Tag**: A text file with a list of up to 5 tags
     * Each tag is on a single line
     * The file extension for this file must be ".tag" or ".tags"
@@ -53,7 +54,7 @@ This basic usage will direct our tool to visit the path specified. Within this p
 optionally:  
 ```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --extension .mp4```  
 optionally:  
-```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --file SpecificFileInPath.mp4``` 
+```py.exe .\publish-file.py -input C:\Path\To\Files --channel @MyAwesomeChannel --file SpecificFileInPath.mp4```
 
 ### Parameters
 
@@ -67,7 +68,9 @@ optionally:
 * --file or -f
     * Filename if explicitly specifying a file to upload
 * --extension or -e
-    * File-extension the script will use to deduce a file to upload 
+    * File-extension the script will use to deduce a file to upload
+* --language or -l
+    * Language of your content in RFC 5646 format (e.g. en, de, es-ES,es-MX, etc.). Default: en - See [Wikipedia](https://en.wikipedia.org/wiki/IETF_language_tag#List_of_major_primary_language_subtags) for a list of primary language tags.
 
 ----
 
@@ -92,8 +95,8 @@ optionally:
 ### Parameters
 
 * --input or -i
-    * Path to the Input File 
+    * Path to the Input File
 * --output or -o
-    * Path to use for the Output File 
+    * Path to use for the Output File
 * --quality or -q
-    * FFMPEG Quality setting to use for Optimization (0 = Best, 51 = Worst)  
+    * FFMPEG Quality setting to use for Optimization (0 = Best, 51 = Worst)
